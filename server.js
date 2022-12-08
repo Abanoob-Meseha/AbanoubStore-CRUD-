@@ -6,6 +6,11 @@ const app = express();
 const mongoose = require("mongoose");
 const port = process.env.PORT ;
 const uri = process.env.URI ;
+const adminRoutes = require("./routes/adminRoutes");
+const webtourRoutes = require("./routes/webtourRoutes");
+
+//static files 
+app.use(express.static("public"));
 
 //parsing middlewares
 app.use(express.urlencoded({extended : true}));
@@ -30,6 +35,9 @@ mongoose.connect(uri , {
         console.log(err.errors[e].message);
     }
 });
+//routes 
+app.use("/admin" , adminRoutes);
+app.use(webtourRoutes); 
 
 //Run the server
 app.listen(port , (err)=>{
